@@ -29,13 +29,11 @@ var Widget = instance.web.Widget;
 
 var PreviewHandler = openerp.med_preview_PreviewHandler;
 var PreviewGenerator = openerp.med_preview_PreviewGenerator;
-var PreviewDialog = med_preview_PreviewDialog;
+var PreviewDialog = openerp.med_preview_PreviewDialog;
 
 var _t = instance.web._t,
    _lt = instance.web._lt;
 var QWeb = instance.web.qweb;
-
-
 
 instance.web.form.FieldBinary.include({
 	initialize_content: function() {
@@ -56,7 +54,9 @@ instance.web.form.FieldBinary.include({
 	                var filename_fieldname = self.node.attrs.filename;
 	                var filename_field = self.view.fields && filename_fieldname && self.view.fields[filename_fieldname];
 	                var filename = filename_field ? filename_field.get('value') : null;
-	                PreviewDialog.createPreviewDialog(self, 'web/binary/saveas?' + $.param({
+                    // PreviewDialog.createPreviewDialog(self, 'web/binary/saveas?' + $.param({
+                    var generator = new instance.web.PreviewGenerator(self, {});
+	                new instance.web.PreviewDialog(self, generator, '/web/binary/saveas?' + $.param({
 	                    'model': self.view.dataset.model,
 	                    'id': self.view.datarecord.id,
 	                    'field': self.name,
@@ -64,7 +64,7 @@ instance.web.form.FieldBinary.include({
 	                    'filename': filename,
 	                    'download': true,
 	                    'data': instance.web.form.is_bin_size(value) ? null : value,
-	                }), false, filename ? filename.split('.').pop() : false, filename);
+	                }), false, filename ? filename.split('.').pop() : false, filename).open();
 	        	});
         	}
         } else {

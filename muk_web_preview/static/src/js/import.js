@@ -1,4 +1,6 @@
-openerp.import= function(instance) {
+openerp.import = function(instance) {
+openerp.muk_preview_PreviewWidgets(instance);
+
 if (typeof openerp.muk_preview_image_PreviewHandler !== 'undefined') {
 	openerp.muk_preview_image_PreviewHandler(instance);
 		instance.web.PreviewGenerator.include({

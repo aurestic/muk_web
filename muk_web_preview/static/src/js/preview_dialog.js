@@ -166,7 +166,9 @@ instance.web.PreviewDialog  = instance.web.Widget.extend({
         }
     },
     destroy: function (reason) {
-        this.$buttons.remove();
+        if (typeof this.$buttons !== 'undefined' && this.$buttons.length) {
+            this.$buttons.remove();
+        }
         var self = this;
         _.each(this.getChildren(), function(el) {
             el.destroy();
